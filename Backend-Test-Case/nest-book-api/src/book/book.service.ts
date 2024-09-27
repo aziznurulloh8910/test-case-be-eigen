@@ -7,7 +7,14 @@ export class BookService {
   constructor(private prisma: PrismaService) {}
 
   async createBook(data: Prisma.BookCreateInput): Promise<Book> {
-    return this.prisma.book.create({ data });
+    return this.prisma.book.create({
+      data: {
+        code: data.code,
+        title: data.title,
+        author: data.author,
+        stock: data.stock,
+      },
+    });
   }
 
   async getAllBooks(): Promise<Book[]> {
@@ -21,7 +28,11 @@ export class BookService {
   async updateBook(code: string, data: Prisma.BookUpdateInput): Promise<Book> {
     return this.prisma.book.update({
       where: { code },
-      data,
+      data: {
+        title: data.title,
+        author: data.author,
+        stock: data.stock,
+      },
     });
   }
 
